@@ -6,6 +6,8 @@ import GetStarted from './components/GetStarted';
 import WhatPeopleSay from './components/WhatPeopleSay';
 import Faqs from './components/Faqs';
 import Refer from './components/Refer';
+import ContactUs from './components/ContactUs';
+import Newletter from './components/Newletter';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
     <WhatPeopleSay/>
     <Faqs/>
     <Refer/>
+    <ContactUs/>
+    <Newletter/>
     </>
   );
 }
