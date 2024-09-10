@@ -1,6 +1,7 @@
 import React from 'react';
 import WithOutStreamImg from '../assets/withoutstream.svg';
 import WithStreamImg from '../assets/withstream.svg';
+import NavBar from './NavBar';
 
 const PaymentSection = () => {
   return (
@@ -21,7 +22,7 @@ const PaymentSection = () => {
           src={WithOutStreamImg}
           alt='Without Stream Bargain Price card'
         />
-        <a href='#'>
+        <a href={NavBar}>
           <img
             className='p-4 max-w-[80%] sm:max-w-full mx-auto'
             src={WithStreamImg}
