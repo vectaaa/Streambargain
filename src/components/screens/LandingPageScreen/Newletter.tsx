@@ -1,5 +1,5 @@
 import React from 'react';
-import Streamlogo from '../assets/streamlogosmall.svg';
+import Streamlogo from '../../../assets/streamlogosmall.svg';
 
 const Newletter = () => {
   return (

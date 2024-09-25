@@ -1,10 +1,10 @@
 import React from 'react';
-import NetflixLogo from '../assets/netflix.svg';
-import CrunchyrollLogo from '../assets/crunchyroll.svg';
-import PrimeVideoLogo from '../assets/prime.svg';
-import YoutubePremiumLogo from '../assets/youtubepremium.svg';
-import SpotifyLogo from '../assets/Spotify.svg';
-import AppleMusic from '../assets/applemusic.svg';
+import NetflixLogo from '../../../assets/netflix.svg';
+import CrunchyrollLogo from '../../../assets/crunchyroll.svg';
+import PrimeVideoLogo from '../../../assets/prime.svg';
+import YoutubePremiumLogo from '../../../assets/youtubepremium.svg';
+import SpotifyLogo from '../../../assets/Spotify.svg';
+import AppleMusic from '../../../assets/applemusic.svg';
 
 const Hero = () => {
   return (

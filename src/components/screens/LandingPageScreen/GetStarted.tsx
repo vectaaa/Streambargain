@@ -1,7 +1,7 @@
 import React from 'react';
-import Frame1 from '../assets/frameone.svg';
-import Frame2 from '../assets/frametwo.svg';
-import Frame3 from '../assets/framethree.svg';
+import Frame1 from '../../../assets/frameone.svg';
+import Frame2 from '../../../assets/frametwo.svg';
+import Frame3 from '../../../assets/framethree.svg';
 
 const GetStarted = () => {
   return (

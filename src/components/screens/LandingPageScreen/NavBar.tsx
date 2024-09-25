@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import StreamLogoBig from '../assets/streamlogo.svg';
+import StreamLogoBig from '../../../assets/streamlogo.svg';
 
 const NavBar = () => {
+  // useState hook to manage the nav state
   const [nav, setNav] = useState(false);
 
+  // Function to toggle the nav state
   const handleNav = () => {
     setNav(!nav);
   };
@@ -12,7 +14,6 @@ const NavBar = () => {
   return (
     <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-black'>
       <img alt='StreamBargain Logo' src={StreamLogoBig}/>
-      {/* <h1 className='w-full text-3xl font-bold text-[#7F56D9]'>StreamBargain</h1> */}
       <ul className='hidden md:flex'>
         <li className='p-4 whitespace-nowrap'>How to get started</li>
         <li className='p-4 whitespace-nowrap'>FAQs</li>
@@ -22,9 +23,13 @@ const NavBar = () => {
           Get Started
         </button>
       </ul>
+
+      {/* Mobile menu toggle */}
       <div onClick={handleNav} className='block md:hidden'>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
       </div>
+
+      {/* Mobile Menu */}
       <div
         className={
           nav

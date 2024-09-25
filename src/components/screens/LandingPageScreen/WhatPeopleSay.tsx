@@ -1,6 +1,6 @@
 import React from 'react';
-import ManImg from '../assets/woman.png';
-import WomanImg from '../assets/man.png';
+import ManImg from '../../../assets/woman.png';
+import WomanImg from '../../../assets/man.png';
 
 
 
