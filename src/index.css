@@ -11,3 +11,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+input.input-error,
+select.input-error {
+  border-color: #fc8181; /* Red border for errors */
+}
+
+input.input-error:focus,
+select.input-error:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(252, 129, 129, 0.5); /* Red outline on focus */
+}
+
+.error-message {
+  color: #fc8181; /* Red color for error messages */
+  font-size: 0.875rem; /* Slightly smaller text for error messages */
+  margin-top: 0.25rem; /* Space between input and error message */
+}

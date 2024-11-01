@@ -2,6 +2,7 @@ import React from 'react';
 import Frame1 from '../../../assets/frameone.svg';
 import Frame2 from '../../../assets/frametwo.svg';
 import Frame3 from '../../../assets/framethree.svg';
+import { Link } from 'react-router-dom';
 
 const GetStarted = () => {
   return (
@@ -27,9 +28,11 @@ const GetStarted = () => {
           <img className='p-2 max-w-[80%] sm:max-w-[45%] md:max-w-[30%]' src={Frame3} alt='Receive your login details' />
         </div>
         <br />
+        <Link to='/login'>
         <button className='text-white bg-gradient-to-b from-purple-500 to-purple-900 hover:bg-purple-800 w-[200px] sm:w-[250px] md:w-[300px] rounded-md text-lg sm:text-xl font-medium my-6 mx-auto py-2 sm:py-3'>
           Get Started Now
         </button>
+        </Link>
         <br />
       </div>
     </div>

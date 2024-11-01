@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import StreamLogoBig from '../../../assets/streamlogo.svg';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   // useState hook to manage the nav state
@@ -19,9 +20,11 @@ const NavBar = () => {
         <li className='p-4 whitespace-nowrap'>FAQs</li>
         <li className='p-4 whitespace-nowrap'>Contact Us</li>
         <li className='p-4 whitespace-nowrap'>Referrals</li>
+        <Link to='/login'>
         <button className='p-4 bg-purple-700 hover:bg-purple-600 text-white py-1 h-12 my-auto font-bold rounded whitespace-nowrap'>
           Get Started
         </button>
+        </Link>
       </ul>
 
       {/* Mobile menu toggle */}

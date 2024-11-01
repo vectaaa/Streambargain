@@ -5,6 +5,7 @@ import PrimeVideoLogo from '../../../assets/prime.svg';
 import YoutubePremiumLogo from '../../../assets/youtubepremium.svg';
 import SpotifyLogo from '../../../assets/Spotify.svg';
 import AppleMusic from '../../../assets/applemusic.svg';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -22,9 +23,10 @@ const Hero = () => {
           <span className='font-bold'>₦3,500 per month,</span> receive an
           All-Access Pass to all of your favorite streaming applications.
         </p>
-        <button className='text-white bg-[#7F56D9] hover:bg-purple-800 w-full sm:w-[300px] rounded-md text-lg font-medium my-6 mx-auto py-3 transition-colors duration-300'>
+        <Link to='/login'>
+        <button className='text-white bg-[#7F56D9] hover:bg-purple-800 w-full sm:w-[300px] rounded-md text-lg font-medium my-6 mx-auto py-3 transition-colors duration-300'> 
           Gain Access Now
-        </button>
+         </button> </Link>
         <div className='mx-auto flex flex-wrap justify-center gap-4 mt-8'>
           <img className='w-[150px] h-auto p-2' alt="Apple Music Logo" src={AppleMusic} />
           <img className='w-[150px] h-auto p-2' alt="Spotify Logo" src={SpotifyLogo} />
