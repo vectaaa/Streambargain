@@ -3,6 +3,7 @@ import LandingPage from './components/screens/LandingPageScreen/index.tsx';
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom';
 import Login from './components/screens/Authentication/Login.tsx';
 import Register from './components/screens/Authentication/Register.tsx';
+import ForgotPassword from './components/screens/Authentication/ForgotPassword.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -10,6 +11,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<LandingPage/>} />
       <Route  path="/login" element={<Login/>} />
       <Route  path="/register" element={<Register/>} />
+      <Route  path="/forgotPassword" element={<ForgotPassword/>} />
+      
     </Route>
       
   )

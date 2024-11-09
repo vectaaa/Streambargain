@@ -2,29 +2,50 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import LogoImage from "../../../assets/streamlogo.svg";
 import { basicSchema } from "../../../schemas";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import Icon from "react-icons-kit";
 import googleLogo from "../../../assets/googlelogo.svg";
 import { Link } from "react-router-dom";
+import axios from "../../../api/axios";
+
+const REGISTER_URL = 'auth/users/';
 
 function Register() {
   //Toast notification upon registration
-  const notify = () => toast("Welcome!");
+  const notify = () => toast.success("Registration Complete go to you email to activate your account");
+  const notifyErr = () => toast("A user with that username or email already exists.");
+  const notifyErr1 = () => toast("Unauthorized");
+  const notifyErr2 = () => toast("Unauthorized");
 
-  const [password, setPassword] = useState("");
-  const [type, setType] = useState("password");
-  const [icon, setIcon] = useState(eyeOff);
+  //All my useStates
+  const [typePassword, setTypePassword] = useState("password");
+  const [iconPassword, setIconPassword] = useState(eyeOff);
+  const [typeConfirmPassword, setTypeConfirmPassword] = useState("password");
+  const [iconConfirmPassword, setIconConfirmPassword] = useState(eyeOff);
+  const [errMsg, setErrMssg] = useState('');
 
-  const handleToggle = () => {
-    if (type === "password") {
-      setIcon(eye);
-      setType("text");
+
+
+  const handleTogglePassword = () => {
+    if (typePassword === "password") {
+      setTypePassword("text");
+      setIconPassword(eye);
     } else {
-      setIcon(eyeOff);
-      setType("password");
+      setTypePassword("password");
+      setIconPassword(eyeOff);
+    }
+  };
+
+  const handleToggleConfirmPassword = () => {
+    if (typeConfirmPassword === "password") {
+      setTypeConfirmPassword("text");
+      setIconConfirmPassword(eye);
+    } else {
+      setTypeConfirmPassword("password");
+      setIconConfirmPassword(eyeOff);
     }
   };
 
@@ -40,16 +61,35 @@ function Register() {
       },
       validationSchema: basicSchema,
       onSubmit: async (values, actions) => {
+        try {
+          const response = await axios.post(REGISTER_URL, JSON.stringify({username: values.username, password: values.password, email: values.email, first_name: values.firstname, last_name: values.lastname}), {
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true,
+          });
+          notify();
+          console.log(response, 'register response');
+        } catch (error) {
+          if (!error?.response){
+            setErrMssg('No server response')
+          } else if(error?.response.status === 400){
+            notifyErr();
+            setErrMssg('A user with that username or email already exists.')
+          } else if(error?.response.status === 401){
+            notifyErr1();
+            setErrMssg('Unauthorized')
+          } else {
+            notifyErr2();
+            setErrMssg('Login Failed')
+          }
+        };
         alert(JSON.stringify(values, null, 2));
         console.log(values);
         console.log(actions);
         // await new Promise((reslove) => setTimeout(reslove, 2000));
         actions.resetForm();
-        notify();
       },
     });
 
-  //   console.log(errors)
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-[600px] p-6 md:p-8 bg-white rounded-lg shadow-lg mx-auto">
@@ -175,7 +215,7 @@ function Register() {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              type={type}
+              type={typePassword}
               name="password"
               id="password"
               placeholder=" "
@@ -185,9 +225,9 @@ function Register() {
             />
             <span
               className="absolute inset-y-0 right-5 bottom-7 flex items-center cursor-pointer"
-              onClick={handleToggle}
+              onClick={handleTogglePassword}
             >
-              <Icon icon={icon} size={20} />
+              <Icon icon={iconPassword} size={20} />
             </span>
             <label
               htmlFor="password"
@@ -211,7 +251,7 @@ function Register() {
               value={values.confirmpassword}
               onChange={handleChange}
               onBlur={handleBlur}
-              type="password"
+              type={typeConfirmPassword}
               name="confirmpassword"
               id="confirmpassword"
               placeholder=" "
@@ -224,9 +264,9 @@ function Register() {
             />
             <span
               className="absolute inset-y-0 right-11 bottom-1 flex items-center cursor-pointer"
-              onClick={handleToggle}
+              onClick={handleToggleConfirmPassword}
             >
-              <Icon className="absolute mr-10" icon={icon} size={20} />
+              <Icon className="absolute mr-10" icon={iconConfirmPassword} size={20} />
             </span>
             <label
               htmlFor="confirmPassword"
@@ -258,19 +298,19 @@ function Register() {
           </div>
           
           <div className="flex items-center justify-center gap-1">
-          <p>Don’t have an account?  </p>
+          <p>Already have an account? </p>
           <Link to='/login'>
           <div
             style={{ cursor: "pointer" }}
             tabIndex={0}
           >
-            <p> Sign In</p>
+            <p>Sign In</p>
           </div>
           </Link>
           </div>
         </form>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

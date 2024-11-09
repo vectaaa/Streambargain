@@ -1,5 +1,6 @@
 import React from 'react';
 import Streamlogo from '../../../assets/streamlogosmall.svg';
+import { Link } from 'react-router-dom';
 
 const Newletter = () => {
   return (
@@ -36,14 +37,16 @@ const Newletter = () => {
             <p className='text-lg text-purple-300'>Join over 4,000+ people to enjoy streaming services payment made easy.</p>
           </div>
           <div className='flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 w-full lg:w-auto'>
+            <Link to='/login'>
             <button
               className='w-full lg:w-auto flex-shrink-0 bg-grey-500 hover:bg-purple-200 border-grey-10 hover:border-grey-700 text-sm border-2 text-black py-2 px-4 rounded-md lg:ml-2'
               type="button"
-            >Login</button>
+            >Login</button></Link>
+            <Link to='/register'>
             <button
               className='w-full lg:w-auto flex-shrink-0 bg-purple-500 hover:bg-purple-700 border-purple-500 hover:border-purple-700 text-sm border-4 text-white py-2 px-4 rounded-md lg:ml-2'
               type="button"
-            >SignUp</button>
+            >SignUp</button></Link>
           </div>
         </div>
         <div className='h-0.5 bg-purple-600 w-full mt-2'></div>
