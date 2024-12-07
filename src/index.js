@@ -6,16 +6,21 @@ import App from './App';
 // import { store } from './store/store.tsx';
 import { AuthProvider } from './context/AuthProvider.jsx';
 // import { ToastContainer, toast } from "react-toastify";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <BrowserRouter>
   <AuthProvider>
   {/* <Provider store={store}> */}
-  <App />
+  <Routes>
+  <Route path="/*" element={<App/>} />
+  </Routes>
   {/* </Provider> */}
   </AuthProvider>
+  </BrowserRouter>
   </React.StrictMode>
 );
 

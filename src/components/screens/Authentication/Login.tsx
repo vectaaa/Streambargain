@@ -1,25 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import LogoImage from "../../../assets/streamlogo.svg";
 import googleLogo from "../../../assets/googlelogo.svg";
 import { loginSchema } from "../../../schemas";
-import AuthContext from "../../../context/AuthProvider";
+// import AuthContext from "../../../context/AuthProvider";
 import axios from "../../../api/axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import Icon from "react-icons-kit";
+import { toast, ToastContainer } from "react-toastify";
+import useAuth from "../../../hooks/useAuth";
 
-
-
-
-const LOGIN_URL = 'auth/jwt/create/';
+const LOGIN_URL = "auth/jwt/create/";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext)
-  const [errMsg, setErrMssg] = useState('');
+  const notifyErr = () => toast.warning("Username or Password does not exist");
+  const notifyErr2 = () => toast.warning("Wrong Password");
+  const notifyErr3 = () =>
+    toast.info(
+      "We are experience downtime on our servers give us a minute or two"
+    );
+    const notifyErr4 = () =>
+      toast.warning(
+        "Cannot Reach our servers kindly check your Internet connection"
+      );
+  const notifySuccess = () => toast.success("Welcome");
+
+  const { setAuth } = useAuth();
+  const [errMsg, setErrMssg] = useState("");
   const [typePassword, setTypePassword] = useState("password");
   const [iconPassword, setIconPassword] = useState(eyeOff);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from.pathname || "/";
 
   const handleTogglePassword = () => {
     if (typePassword === "password") {
@@ -31,9 +45,7 @@ function Login() {
     }
   };
 
-
   const { values, handleSubmit, handleChange, handleBlur } = useFormik({
-    
     initialValues: {
       email: "",
       password: "",
@@ -41,27 +53,42 @@ function Login() {
     validationSchema: loginSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(LOGIN_URL, JSON.stringify({email: values.email, password: values.password}), {
-          headers: { 'Content-Type': 'application/json'},
-          withCredentials: true,
-        });
-        console.log(response, 'login response');
+        const response = await axios.post(
+          LOGIN_URL,
+          JSON.stringify({ email: values.email, password: values.password }),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        console.log(response, "login response");
         const accessToken = response.data.access;
-        console.log(accessToken, 'accesstoken');
-        setAuth({accessToken});
+        console.log(accessToken, "accesstoken");
+        setAuth({ accessToken });
+        notifySuccess();
+        navigate(from, {replace: true} );
       } catch (error) {
-        if(!error?.response){
-          setErrMssg('No server response')
-        } else if(error?.response.status === 400){
-          setErrMssg('Missing username or password');
-        } else if (error?.response.status === 401){
-          setErrMssg('Unauthorized')
+        if (!error?.response) {
+          setErrMssg("No server response");
+          notifyErr4();
+        } else if (error?.response.status === 400) {
+          notifyErr();
+          setErrMssg("Username or Password does not exist");
+        } else if (error?.response.status === 401) {
+          setErrMssg("Unauthorized");
+          notifyErr2();
+        } else if (error?.response.status === 404) {
+          setErrMssg(
+            "We are experience downtime on our servers give us a minute or two"
+          );
+          notifyErr3();
         } else {
-          setErrMssg('Login Failed')
+          setErrMssg("Login Failed");
         }
+        // errRef.current.focus();
       }
       console.log(values, "Values");
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 
@@ -115,7 +142,7 @@ function Login() {
               placeholder=" "
               className="peer w-full h-[52px] p-4 pt-6 border-2 focus:outline-none focus:ring-0 focus:border-[#7F56D9] rounded-tl-lg rounded-br-lg"
             />
-             <span
+            <span
               className="absolute inset-y-0 right-5 bottom-1 flex items-center cursor-pointer"
               onClick={handleTogglePassword}
             >
@@ -127,7 +154,6 @@ function Login() {
             >
               Password
             </label>
-
           </div>
 
           {/* Checkbox and Forgotten Password */}
@@ -136,22 +162,18 @@ function Login() {
               <input type="checkbox" id="rememberMe" />
               <label htmlFor="rememberMe">Remember me</label>
             </div>
-            <Link to='/forgotPassword'>
-            <p className="text-gray-300">Forgotten password?</p>
+            <Link to="/forgotPassword">
+              <p className="text-gray-300">Forgotten password?</p>
             </Link>
           </div>
           <div className="flex items-center justify-center gap-1">
-          <p>Don’t have an account?  </p>
-          <Link to='/register'>
-          <div
-            style={{ cursor: "pointer" }}
-            tabIndex={0}
-          >
-            <p>Sign Up</p>
+            <p>Don’t have an account? </p>
+            <Link to="/register">
+              <div style={{ cursor: "pointer" }} tabIndex={0}>
+                <p>Sign Up</p>
+              </div>
+            </Link>
           </div>
-          </Link>
-          </div>
-
 
           <div className="flex items-center justify-center">
             <p className="mr-2">Sign In</p>
@@ -171,6 +193,7 @@ function Login() {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
